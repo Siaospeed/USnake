@@ -2,6 +2,7 @@
 /build/
 /build-*/
 /cmake-build-*
+/release-*
 
 # CMake files
 CMakeFiles/

@@ -43,7 +43,7 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
         case Qt::Key_Up:    controller_->ChangeDirection(Qt::Key_Up);    break;
         case Qt::Key_Down:  controller_->ChangeDirection(Qt::Key_Down);  break;
         case Qt::Key_P:     break; // TODO: Pause the game
-        case Qt::Key_R:     break; // TODO: Reset the game
+        case Qt::Key_R:     controller_->StartGame();                    break;
         default:            QWidget::keyPressEvent(event); break;
     }
 }

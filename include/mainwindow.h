@@ -4,8 +4,10 @@
 #include "gamewidget.h"
 #include "gamecontroller.h"
 
+#include <QLCDNumber>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QSlider>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -25,12 +27,22 @@ public:
 private slots:
     void StartGame();
     void PauseGame();
+    void UpdateScore(int new_score);
+
+    void on_actionEasy_triggered();
+
+    void on_actionNormal_triggered();
+
+    void on_actionHard_triggered();
 
 private:
     GameController* game_controller_;
     GameWidget* game_widget_;
+
     QPushButton* start_button_;
     QPushButton* pause_button_;
+
+    QLCDNumber* score_display_;
 
 private:
     Ui::MainWindow* ui;

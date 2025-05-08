@@ -9,7 +9,8 @@
 
 GameController::GameController(QWidget* game_area)
     : QObject(game_area),
-      timer_(new QTimer(this))
+      timer_(new QTimer(this)),
+      timer_interval_(300)
 {
     qDebug() << "GameController::GameController()";
     connect(timer_, &QTimer::timeout, this, &GameController::update);
@@ -33,9 +34,11 @@ void GameController::StartGame()
 
     score_ = 30;
 
+    emit ScoreChanged(score_);
+
     GenerateFood();
 
-    timer_->start(100);
+    timer_->start(timer_interval_);
 }
 
 void GameController::ChangeDirection(Qt::Key key)
@@ -62,6 +65,11 @@ void GameController::ChangeDirection(Qt::Key key)
     direction_ = new_direction;
 }
 
+void GameController::SetTimerInterval(int ms)
+{
+    this->timer_interval_ = ms;
+}
+
 const std::deque<QPoint>& GameController::GetSnake() const
 {
     // Q_ASSERT(!snake_.empty());
@@ -71,6 +79,11 @@ const std::deque<QPoint>& GameController::GetSnake() const
 const QPoint& GameController::GetFood() const
 {
     return this->food_;
+}
+
+int GameController::GetScore() const
+{
+    return this->score_;
 }
 
 int GameController::GetWidth() const
@@ -89,6 +102,8 @@ void GameController::update()
 
     qDebug() << "update triggered";
     Q_ASSERT(!snake_.empty());  // 保留断言
+
+    // direction_ = pending_direction_;
 
     QPoint head = snake_.front();
     QPoint new_head = head;
@@ -114,6 +129,7 @@ void GameController::update()
     if (collision == CollisionType::FOOD)
     {
         score_ += 10;
+        emit ScoreChanged(score_);
         GenerateFood();
     }
     else

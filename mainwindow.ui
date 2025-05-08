@@ -23,8 +23,44 @@
      <height>29</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuUSnake">
+    <property name="title">
+     <string>USnake</string>
+    </property>
+    <widget class="QMenu" name="menuDifficulty">
+     <property name="title">
+      <string>Difficulty</string>
+     </property>
+     <addaction name="actionEasy"/>
+     <addaction name="actionNormal"/>
+     <addaction name="actionHard"/>
+    </widget>
+    <addaction name="actionNew_Game"/>
+    <addaction name="menuDifficulty"/>
+   </widget>
+   <addaction name="menuUSnake"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_Game">
+   <property name="text">
+    <string>New Game</string>
+   </property>
+  </action>
+  <action name="actionEasy">
+   <property name="text">
+    <string>Easy</string>
+   </property>
+  </action>
+  <action name="actionNormal">
+   <property name="text">
+    <string>Normal</string>
+   </property>
+  </action>
+  <action name="actionHard">
+   <property name="text">
+    <string>Hard</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
