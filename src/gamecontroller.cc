@@ -25,8 +25,6 @@ void GameController::StartGame()
     snake_.emplace_back(4, 5);
     snake_.emplace_back(3, 5);
 
-    Q_ASSERT(!snake_.empty());
-
     direction_ = DIRECTION::RIGHT;
 
     width_ = 20;

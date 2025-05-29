@@ -14,15 +14,15 @@ MainWindow::MainWindow(QWidget* parent)
 
     auto central = new QWidget(this);
     auto layout = new QVBoxLayout(central);
-    layout->setContentsMargins(50, 50, 0, 0); // 左50、上50，右下为0
+    layout->setContentsMargins(50, 50, 0, 0);
     layout->addWidget(game_widget_);
     setCentralWidget(central);
 
-    start_button_ = new QPushButton("Start Game", this);
-    start_button_->setGeometry(500, 450, 100, 30);  // 设置按钮位置和大小
+    start_button_ = new QPushButton(tr("Start Game"), this);
+    start_button_->setGeometry(500, 450, 100, 30);
     connect(start_button_, &QPushButton::clicked, this, &MainWindow::StartGame);
 
-    pause_button_ = new QPushButton("Pause", this);
+    pause_button_ = new QPushButton(tr("Pause"), this);
     pause_button_->setGeometry(650, 450, 100, 30);
     connect(pause_button_, &QPushButton::clicked, this, &MainWindow::PauseGame);
 

@@ -7,7 +7,6 @@
 #include <QLCDNumber>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QSlider>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -30,9 +29,7 @@ private slots:
     void UpdateScore(int new_score);
 
     void on_actionEasy_triggered();
-
     void on_actionNormal_triggered();
-
     void on_actionHard_triggered();
 
 private:

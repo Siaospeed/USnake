@@ -35,6 +35,7 @@ make
 USnake/
 ├── include/          # 头文件
 ├── src/              # 源码文件
+├── translations/     # 翻译文件
 ├── assets/           # 游戏贴图资源（如有）
 ├── CMakeLists.txt    # CMake 构建配置
 └── README.md         # 项目说明

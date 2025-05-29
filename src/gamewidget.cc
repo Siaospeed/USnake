@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QPainter>
 
-
 GameWidget::GameWidget(GameController* controller, QWidget* parent)
     : QWidget(parent), controller_(controller)
 {
@@ -14,8 +13,8 @@ GameWidget::GameWidget(GameController* controller, QWidget* parent)
 
     qDebug() << controller_;
 
-    setFocusPolicy(Qt::StrongFocus);  // 强制设置为接收焦点
-    setFocus();  // 让这个窗口组件获取焦点
+    setFocusPolicy(Qt::StrongFocus);
+    setFocus();
 
     connect(controller_, &GameController::GameUpdated, this, &GameWidget::update);
     connect(controller_, &GameController::GameOver, this, &GameWidget::GameOver);
@@ -50,7 +49,7 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
 
 void GameWidget::resizeEvent(QResizeEvent* event)
 {
-
+    // TODO: Re-paint the window when resize
 }
 
 void GameWidget::update()
