@@ -11,15 +11,11 @@ GameWidget::GameWidget(GameController* controller, QWidget* parent)
 
     setFixedSize(400, 400);
 
-    qDebug() << controller_;
-
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 
     connect(controller_, &GameController::GameUpdated, this, &GameWidget::update);
     connect(controller_, &GameController::GameOver, this, &GameWidget::GameOver);
-
-    qDebug() << controller_;
 }
 
 void GameWidget::paintEvent(QPaintEvent* event)
@@ -41,8 +37,8 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
         case Qt::Key_Right: controller_->ChangeDirection(Qt::Key_Right); break;
         case Qt::Key_Up:    controller_->ChangeDirection(Qt::Key_Up);    break;
         case Qt::Key_Down:  controller_->ChangeDirection(Qt::Key_Down);  break;
-        case Qt::Key_P:     break; // TODO: Pause the game
-        case Qt::Key_R:     controller_->StartGame();                    break;
+        case Qt::Key_P:     controller_->TogglePause();    break;
+        case Qt::Key_R:     controller_->StartGame();      break;
         default:            QWidget::keyPressEvent(event); break;
     }
 }
@@ -94,7 +90,6 @@ void GameWidget::DrawGrid(QPainter& painter)
     int height = controller_->GetHeight();
 
     painter.setPen(QPen(Qt::lightGray, 1, Qt::DotLine));
-    // painter.setPen(QPen(Qt::black, 1));
 
     for (int x = 0; x <= width * cell_size_; x += cell_size_)
     {

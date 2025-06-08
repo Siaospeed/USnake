@@ -86,14 +86,30 @@ signals:
 
     /**
      * @brief Emitted when the score changes.
-     * @param score The updated score.
+     * @param new_score The updated score.
      */
-    void ScoreChanged(int new_score_);
+    void ScoreChanged(int new_score);
+
+    /**
+     * @brief Emitted when the game has been paused.
+     */
+    void GamePaused();
+
+    /**
+     * @brief Emitted when the game has been resumed.
+     */
+    void GameResumed();
 
     /**
      * @brief Emitted when the game ends due to collision.
      */
     void GameOver();
+
+public slots:
+    /**
+     * @brief Called at
+     */
+    void TogglePause();
 
 private slots:
     /**
@@ -111,6 +127,7 @@ private:
     QPoint food_;
     QTimer* timer_;
     int score_;
+    bool is_paused_;
 
     int width_;
     int height_;

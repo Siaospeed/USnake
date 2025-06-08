@@ -12,18 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Gui Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-message(STATUS "Qt6_FOUND: ${Qt6_FOUND}")
-message(STATUS "Qt6Core_FOUND: ${Qt6Core_FOUND}")
-message(STATUS "Qt6Gui_FOUND: ${Qt6Gui_FOUND}")
-message(STATUS "Qt6Widgets_FOUND: ${Qt6Widgets_FOUND}")
-message(STATUS "Qt6LinguistTools_FOUND: ${Qt6LinguistTools_FOUND}")
-
-message(STATUS "Qt6Core_DIR: ${Qt6Core_DIR}")
-message(STATUS "Qt6Gui_DIR: ${Qt6Gui_DIR}")
-message(STATUS "Qt6Widgets_DIR: ${Qt6Widgets_DIR}")
-message(STATUS "Qt6LinguistTools_DIR: ${Qt6LinguistTools_DIR}")
-
-include(${Qt6LinguistTools_DIR}/Qt6LinguistToolsMacros.cmake)
+include(/usr/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake)
 
 set(PROJECT_SOURCES
         mainwindow.ui
@@ -65,24 +54,6 @@ endif()
 
 target_link_libraries(USnake PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-
-
-# 指定需要翻译的 .ts 文件
-# 文件名通常遵循 "项目名_语言代码.ts" 的约定
-set(TRANSLATION_FILES
-        translations/USnake_en_US.ts
-        translations/USnake_zh_CN.ts
-        translations/USnake_zh_TW.ts
-)
-
-# 使用 qt_add_translations 命令生成 .qm 文件
-# qt6_add_translations(TARGET USnake TS_FILES ${TRANSLATION_FILES})
-
-# 将生成的 .qm 文件安装到应用程序的翻译目录下
-install(FILES ${USnake_TRANSLATIONS}
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/translations"
-)
-
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
@@ -107,3 +78,14 @@ install(TARGETS USnake
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(USnake)
 endif()
+
+set(TRANSLATION_FILES
+        translations/USnake_en_US.ts
+        translations/USnake_zh_CN.ts
+        translations/USnake_zh_TW.ts
+)
+
+qt_add_translations(USnake
+        TS_FILES ${TRANSLATION_FILES}
+        QM_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/translations
+)

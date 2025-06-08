@@ -2,6 +2,7 @@
 #include "../ui_mainwindow.h"
 
 #include <QBoxLayout>
+#include <QWidget>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -9,7 +10,6 @@ MainWindow::MainWindow(QWidget* parent)
     , game_widget_(new GameWidget(game_controller_, this))
     , ui(new Ui::MainWindow)
 {
-    qDebug() << "MainWindow::MainWindow()";
     ui->setupUi(this);
 
     auto central = new QWidget(this);
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     pause_button_ = new QPushButton(tr("Pause"), this);
     pause_button_->setGeometry(650, 450, 100, 30);
-    connect(pause_button_, &QPushButton::clicked, this, &MainWindow::PauseGame);
+    connect(pause_button_, &QPushButton::clicked, game_controller_, &GameController::TogglePause);
 
     score_display_ = new QLCDNumber(this);
     score_display_->setDigitCount(4);
@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget* parent)
     score_display_->setGeometry(575, 250, 100, 30);
     connect(game_controller_, &GameController::ScoreChanged, this, &MainWindow::UpdateScore);
 
-    qDebug() << "MainWindow::MainWindow()";
+    connect(game_controller_, &GameController::GamePaused, this, &MainWindow::PauseGame);
+    connect(game_controller_, &GameController::GameResumed, this, &MainWindow::ResumeGame);
 }
 
 void MainWindow::StartGame()
@@ -43,7 +44,14 @@ void MainWindow::StartGame()
 
 void MainWindow::PauseGame()
 {
-    // 暂停或恢复游戏
+    pause_button_->setText(tr("Resume"));
+    game_widget_->setFocus();
+}
+
+void MainWindow::ResumeGame()
+{
+    pause_button_->setText(tr("Pause"));
+    game_widget_->setFocus();
 }
 
 void MainWindow::UpdateScore(int new_score)
@@ -60,7 +68,6 @@ void MainWindow::on_actionEasy_triggered()
 {
     game_controller_->SetTimerInterval(500);
 }
-
 
 void MainWindow::on_actionNormal_triggered()
 {

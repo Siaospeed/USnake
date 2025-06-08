@@ -12,9 +12,7 @@ GameController::GameController(QWidget* game_area)
       timer_(new QTimer(this)),
       timer_interval_(300)
 {
-    qDebug() << "GameController::GameController()";
     connect(timer_, &QTimer::timeout, this, &GameController::update);
-    qDebug() << "GameController::GameController()";
 }
 
 void GameController::StartGame()
@@ -31,6 +29,7 @@ void GameController::StartGame()
     height_ = 20;
 
     score_ = 30;
+    is_paused_ = false;
 
     emit ScoreChanged(score_);
 
@@ -70,7 +69,6 @@ void GameController::SetTimerInterval(int ms)
 
 const std::deque<QPoint>& GameController::GetSnake() const
 {
-    // Q_ASSERT(!snake_.empty());
     return this->snake_;
 }
 
@@ -96,11 +94,9 @@ int GameController::GetHeight() const
 
 void GameController::update()
 {
-    // if (snake_.empty()) return;
-
     qDebug() << "update triggered";
-    Q_ASSERT(!snake_.empty());  // 保留断言
 
+    // TODO: Avoid instant reversal with 2-step direction change.
     // direction_ = pending_direction_;
 
     QPoint head = snake_.front();
@@ -136,6 +132,24 @@ void GameController::update()
     }
 
     emit GameUpdated();
+}
+
+void GameController::TogglePause()
+{
+    if (is_paused_)
+    {
+        is_paused_ = false;
+        timer_->start(timer_interval_);
+
+        emit GameResumed();
+    }
+    else
+    {
+        is_paused_ = true;
+        timer_->stop();
+
+        emit GamePaused();
+    }
 }
 
 void GameController::GenerateFood()

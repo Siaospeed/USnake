@@ -1,12 +1,13 @@
 #ifndef USNAKE_MAINWINDOW_H
 #define USNAKE_MAINWINDOW_H
 
-#include "gamewidget.h"
-#include "gamecontroller.h"
-
 #include <QLCDNumber>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QWidget>
+
+#include "gamewidget.h"
+#include "gamecontroller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,6 +27,7 @@ public:
 private slots:
     void StartGame();
     void PauseGame();
+    void ResumeGame();
     void UpdateScore(int new_score);
 
     void on_actionEasy_triggered();
